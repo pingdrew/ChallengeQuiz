@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <main id="quiz-container">
+    <h1>Coder quiz</h1>
+    <div id="question"></div>
+    <ul id="options"></ul>
+    <button id="start-button">Start</button>
+    <input type="text" id="initials" placeholder="Enter your initials">
+    <button id="submit-button">Submit</button>
+    <span id="timer">60</span>
+  </main>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Code Quiz Game</title>
+  <style>
+    /* Add your CSS styles here */
+  </style>
+</head>
+<body>
+  <h1>Code Quiz Game</h1>
+  <div id="start-screen">
+    <h2>Welcome to the Quiz!</h2>
+    <button id="start-button">Start</button>
+  </div>
+  <div id="quiz-screen" style="display: none;">
+    <h2 id="question"></h2>
+    <ul id="choices"></ul>
+    <p id="timer">Time: <span id="time">0</span></p>
+  </div>
+  <div id="end-screen" style="display: none;">
+    <h2>Quiz Completed!</h2>
+    <p>Your score: <span id="score"></span></p>
+    <form id="score-form">
+      <label for="initials">Enter initials:</label>
+      <input type="text" id="initials" />
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+  <script>
+    // Quiz questions and answers
+    const quizData = [
+      {
+        question: "What is the capital of France?",
+        choices: ["Paris", "London", "Madrid", "Rome"],
+        correctAnswer: 0
+      },
+      {
+        question: "What is the largest planet in our solar system?",
+        choices: ["Jupiter", "Saturn", "Mars", "Earth"],
+        correctAnswer: 0
+      },
+      // Add more questions here...
+    ];
+
+    // Quiz variables
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let timeLeft = 60; // seconds
+
+    // DOM elements
+    const startButton = document.getElementById("start-button");
+    const questionElement = document.getElementById("question");
+    const choicesElement = document.getElementById("choices");
+    const timerElement = document.getElementById("time");
+    const scoreElement = document.getElementById("score");
+    const initialsInput = document.getElementById("initials");
+    const scoreForm = document.getElementById("score-form");
+
+    // Event listener for start button
+    startButton.addEventListener("click", startQuiz);
+
+    // Start the quiz
+    function startQuiz() {
+      document.getElementById("start-screen").style.display = "none";
+      document.getElementById("quiz-screen").style.display = "block";
+      setQuestion();
+      startTimer();
+    }
+
+    // Set the current question and choices
+    function setQuestion() {
+      const currentQuestion = quizData[currentQuestionIndex];
+      questionElement.textContent = currentQuestion.question;
+      choicesElement.innerHTML = "";
+      for (let i = 0; i < currentQuestion.choices.length; i++) {
+        const choice = document.createElement("li");
+        choice.textContent = currentQuestion.choices[i];
+        choice.addEventListener("click", () => {
+          checkAnswer(i);
+        });
+        choicesElement.appendChild(choice);
+      }
+    }
+
+    // Check the selected answer
+    function checkAnswer(answerIndex) {
+      const currentQuestion = quizData[currentQuestionIndex];
+      if (answerIndex === currentQuestion.correctAnswer) {
+        score++;
+      } else {
+        timeLeft -= 10; // Subtract 10 seconds for incorrect answer
+      }
+      currentQuestionIndex++;
+      if (currentQuestionIndex < quizData.length) {
+        setQuestion();
+      } else {
+        endQuiz();
+      }
+    }
+
+    // Start the timer
+    function startTimer() {
+      const timer = setInterval(() => {
+        timeLeft--;
+        timerElement.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          endQuiz();
+        }
+      }, 1000);
+    }
+
+    // End the quiz
+    function endQuiz() {
+      document.getElementById("quiz-screen").style.display = "none";
+      document.getElementById("end-screen").style.display = "block";
+      scoreElement.textContent = score;
+    }
+
+    // Event listener for score form submission
+    scoreForm.addEventListener("submit", saveScore);
+
+    // Save the score
+    function saveScore(event) {
+      event.preventDefault();
+      const initials = initialsInput.value;
+      // Save initials and score using your preferred method (e.g., local storage, backend server)
+      console.log("Initials: " + initials + ", Score: " + score);
+      // You can redirect to another page or perform other actions after saving the score
+    }
+  </script>
+</body>
+</html> -->
