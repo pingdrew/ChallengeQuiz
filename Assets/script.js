@@ -1,4 +1,5 @@
 const timerElement = document.getElementById("timer");
+const leaderboard = [];
 const quizQuestions = [
 {
   question: "question 1",
@@ -22,34 +23,81 @@ const quizQuestions = [
 },
 ];
 
+let currentQuestionIndex = 0;
+let score = 0;
+let timeLeft = 60;
+let timerInterval;
+var endTime;
+
 const startElement = document.getElementById("start-button");
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
 const submitElement = document.getElementById("submit-button");
-const textboxElement = document.getElementById("Initials");
+const textboxElement = document.getElementById("initials");
 
-var currentQuestion = 0;
-
-// console.log(quizQuestions[1].options)
-// WHEN I click the start button
-// THEN a timer starts and I am presented with a question
 startElement.addEventListener("click", startButtonClicked);
-// currentQuestion.options[currentAnswer].addEventListener("click", startButtonClicked);
+submitElement.addEventListener("click", saveScore);
 
+submitElement.style.display = "none";
+textboxElement.style.display = "none";
 
-function startButtonClicked(){
-  questionElement.append(quizQuestions[0].question)
-  optionsElement.append(quizQuestions[0].options)
+function startButtonClicked() {
+  setQuestion();
+  startElement.style.display = "none";
+  timerInterval = setInterval(updateTimer, 1175)
 };
 
-// WHEN I answer a question
-// THEN I am presented with another question
+function setQuestion() {
+  const currentQuestion = quizQuestions[currentQuestionIndex];
+  questionElement.textContent = currentQuestion.question;
+  optionsElement.innerHTML = "";
+  for (let i = 0; i < currentQuestion.options.length; i++) {
+    const choice = document.createElement("li");
+    choice.textContent = currentQuestion.options[i];
+    choice.addEventListener("click", () => {
+      checkAnswer(i);
+    });
+    optionsElement.appendChild(choice);
+  };
+};
 
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
+function updateTimer() {
+  timeLeft--;
+  timerElement.textContent = timeLeft;
+};
 
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
+function checkAnswer(answerIndex) {
+  const currentQuestion = quizQuestions[currentQuestionIndex];
+  if (timeLeft <= 0){
+    endQuiz();
+  };
 
-// WHEN the game is over
-// THEN I can save my initials and my score
+  if (answerIndex === currentQuestion.answer) {
+    score++;
+  } else {
+    timeLeft -= 10;
+  }
+
+  currentQuestionIndex++;
+
+  if (currentQuestionIndex < quizQuestions.length) {
+    setQuestion();
+  } else {
+    endQuiz();
+  }
+};
+
+function endQuiz() {
+  endTime = timeLeft;
+  timerElement.style.display = "none";
+  optionsElement.style.display = "none";
+  textboxElement.style.display = "block";
+  submitElement.style.display = "block";
+  questionElement.textContent = "Your score is " + score + " out of 4, with " + endTime + " seconds left. Enter your initials and click submit to save your score!";
+};
+
+function saveScore() {
+  var initials = textboxElement.value;
+  leaderboard.push(["user: " + initials, "score: " + score, "time left: " + endTime]);
+  console.log(leaderboard)
+}
