@@ -1,0 +1,54 @@
+h1 {
+  border-bottom-style: solid;
+  width: 40vw;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+main {
+  margin:auto;
+  padding:10px;
+  width: 60vw;
+  text-align: center;
+  background-color: darkblue;
+  color: white;
+  border-style: solid;
+  border-radius: 10px;
+  box-shadow: 50px black;
+}
+
+div {
+  font-size: larger;
+}
+
+ul {
+  list-style-type: none;
+  padding: 10px;
+  width: 30vw;
+  margin: auto;
+}
+
+li {
+  line-height: 40px;
+  border-style: solid;
+  border-color: black;
+  color: black;
+  background-color: whitesmoke;
+  border-radius: 10px;
+}
+
+input {
+  margin: auto;
+}
+
+button {
+  margin: auto;
+}
+
+.timer {
+  padding: 10px;
+}
+
+li:hover {
+  transform: scale(1.1);
+}

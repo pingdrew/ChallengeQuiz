@@ -40,11 +40,20 @@ submitElement.addEventListener("click", saveScore);
 
 submitElement.style.display = "none";
 textboxElement.style.display = "none";
+optionsElement.style.display = "none";
+timerElement.style.display = "none";
 
 function startButtonClicked() {
   setQuestion();
   startElement.style.display = "none";
-  timerInterval = setInterval(updateTimer, 1175)
+  optionsElement.style.display = "block";
+  timerElement.style.display = "block";
+  timerInterval = setInterval(updateTimer, 1175);
+};
+
+function updateTimer() {
+  timeLeft--;
+  timerElement.textContent = timeLeft;
 };
 
 function setQuestion() {
@@ -59,11 +68,6 @@ function setQuestion() {
     });
     optionsElement.appendChild(choice);
   };
-};
-
-function updateTimer() {
-  timeLeft--;
-  timerElement.textContent = timeLeft;
 };
 
 function checkAnswer(answerIndex) {
@@ -98,6 +102,13 @@ function endQuiz() {
 
 function saveScore() {
   var initials = textboxElement.value;
-  leaderboard.push(["user: " + initials, "score: " + score, "time left: " + endTime]);
-  console.log(leaderboard)
-}
+  leaderboard.push({
+    user: initials,
+    score: score,
+    timeLeft: endTime
+  });
+  localStorage.setItem("leaderBoard", JSON.stringify(leaderboard));
+  console.log(leaderboard);
+  location.reload();
+  window.alert(JSON.stringify(leaderboard));
+};
