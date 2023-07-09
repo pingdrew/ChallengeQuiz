@@ -1,6 +1,5 @@
 // declare timer variable, locally stored leaderboard array, and quiz questions array
 const timerElement = document.getElementById("timer");
-const leaderboard = [];
 const quizQuestions = [
 {
   question: "question 1",
@@ -25,11 +24,13 @@ const quizQuestions = [
 ];
 
 // get our variables that will change every quiz
-let currentQuestionIndex = 0;
-let score = 0;
-let timeLeft = 60;
-let timerInterval;
+var currentQuestionIndex = 0;
+var score = 0;
+var timeLeft = 60;
+var timerInterval;
 var endTime;
+var updatedLocalStorage = [];
+var cls = [];
 
 // get our elements on the page to reference later
 const startElement = document.getElementById("start-button");
@@ -37,6 +38,7 @@ const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
 const submitElement = document.getElementById("submit-button");
 const textboxElement = document.getElementById("initials");
+const leaderButtonElement = document.getElementById("leaderboard-button")
 
 // add click event listeners to the start button and submit button to call functions that will be the entirety of the quiz
 startElement.addEventListener("click", startButtonClicked);
@@ -52,6 +54,7 @@ timerElement.style.display = "none";
 function startButtonClicked() {
   setQuestion();
   startElement.style.display = "none";
+  leaderButtonElement.style.display = "none";
   optionsElement.style.display = "block";
   timerElement.style.display = "block";
   timerInterval = setInterval(updateTimer, 1175);
@@ -113,6 +116,7 @@ function checkAnswer(answerIndex) {
 // saves the timeleft to display your score, time when u ended, and asks you to put your initials into the box that just appeared
 function endQuiz() {
   endTime = timeLeft;
+  leaderButtonElement.style.display = "block";
   timerElement.style.display = "none";
   optionsElement.style.display = "none";
   textboxElement.style.display = "block";
@@ -123,14 +127,33 @@ function endQuiz() {
 // when the save button is clicked it will grab what you put for initials and put your intitials, score, and endtime in a final object for your entry on the leaderboard
 function saveScore() {
   var initials = textboxElement.value;
-  leaderboard.push({
-    user: initials,
-    score: score,
-    timeLeft: endTime
-  });
-  // sets the object leaderboard in localstorage to save even when the page reloads and makes a window alert to show you your leaderboard entry
-  localStorage.setItem("leaderBoard", JSON.stringify(leaderboard));
-  console.log(leaderboard);
-  location.reload();
-  window.alert(JSON.stringify(leaderboard));
+  if(!initials) {
+    window.alert("Don't leave the initials empty bro like what..")
+    return;
+  } else { 
+    var leaderboard = {
+      user: initials,
+      score: score,
+      timeLeft: endTime
+    };
+    // sets the object leaderboard in localstorage to save even when the page reloads and makes a window alert to show you your leaderboard entry
+    
+    correctScore()
+
+    cls.push(leaderboard);
+
+    localStorage.setItem("leaderBoard", JSON.stringify(cls));
+
+    location.reload();
+    window.alert(JSON.stringify(leaderboard));
+  };
 };
+
+// makes the score correctly grabbed from the window container and replaced back into it
+function correctScore() {
+  var currentLocalStorage = JSON.parse(localStorage.getItem("leaderBoard"));
+  
+  if (currentLocalStorage != "null") {
+    updatedLocalStorage = currentLocalStorage;
+  };
+}
