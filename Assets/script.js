@@ -30,7 +30,6 @@ var timeLeft = 60;
 var timerInterval;
 var endTime;
 var updatedLocalStorage = [];
-var cls = [];
 
 // get our elements on the page to reference later
 const startElement = document.getElementById("start-button");
@@ -140,9 +139,9 @@ function saveScore() {
     
     correctScore()
 
-    cls.push(leaderboard);
+    updatedLocalStorage.push(leaderboard);
 
-    localStorage.setItem("leaderBoard", JSON.stringify(cls));
+    localStorage.setItem("leaderBoard", JSON.stringify(updatedLocalStorage));
 
     location.reload();
     window.alert(JSON.stringify(leaderboard));
